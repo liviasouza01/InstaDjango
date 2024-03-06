@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+
+    <!-- Bootstarp CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="left-nav">
+                    <div class="logo">
+                        <img src="{% static 'images/insta_logo.png' %}" class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="col-sm-6 w-25 offset-4 p-2 my-4 mb-1">
+        <div class="card">
+            <div class="card-body">
+                    <div class="text-center">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <p class="text-dark text-center mt-1 fw-bold mb-2">Trouble Logging In?</p>
+                    <p class="text-muted text-center px-2 mb-3">Enter your email and we'll send you a link to get back into your account.</p>
+
+                <form action="{% url 'password_reset' %}" method="POST" class="px-3" novalidate class="">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                        <p class='text-danger my-3'>{{error}}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    <!-- form -->
+                    {% for fm in form %}
+                        <div class="form-group mb-2">
+                            {{fm}}
+                            <small class='text-danger'>{{fm.errors|striptags}}</small>
+                        </div>
+                    {% endfor %}
+
+                    <div class="d-grid text-center">
+                        <button type="submit" class="btn btn-primary fw-bold">Send Login Link</button>
+                    </div>
+                </form>
+
+                    <div class='text-center text-muted mt-4 mb-3 or'>OR</div>
+
+                    <div class='text-center'>
+                        <a href="{% url 'signup' %}" class='link-dark 
+                         text-decoration-none fw-bold cna'>Create New Account
+                        </a>
+                    </div>
+            
+                    <div class='text-center mt-3'>
+                        <a href="{% url 'login' %}" class='link-dark 
+                         text-decoration-none fw-bold cna'>Back To Login
+                        </a>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- FontAwesome Js -->
+    <script src="https://kit.fontawesome.com/462db8ab2c.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

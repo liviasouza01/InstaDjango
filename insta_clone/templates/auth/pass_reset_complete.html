@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset Complete</title>
+
+    <!-- Bootstarp CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="left-nav">
+                    <div class="logo">
+                        <img src="{% static 'images/insta_logo.png' %}" class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row mx-auto w-75 my-3">
+            <div class="text-center">
+                <h3>Password Reset Successful !!</h3>
+                <div><iframe src="https://giphy.com/embed/ibolLe3mOqHE3PQTtk" width='200'
+                    height='200' class='giphy-embed' frameborder="0" allowfullscreen></iframe>
+                </div>
+                <a href="{% url 'login' %}" class='link-primary 
+                 text-decoration-none fw-bold'>You Can Log In Now!</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
