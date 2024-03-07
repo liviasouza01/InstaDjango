@@ -1,5 +1,0 @@
-Pending Things: 
-
-	FB Login
-	full-name in signup view
-	signup fb login button
