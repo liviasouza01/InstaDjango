@@ -101,6 +101,91 @@
     <!-- FontAwesome Js -->
     <script src="https://kit.fontawesome.com/462db8ab2c.js" crossorigin="anonymous"></script>
 
+    <!--Actions Js-->
+    <form id="comment-form">
+        <input class="w-100 border-0 p-3 input-post" id="comment-input" placeholder="Add a comment...">
+        <button type="submit" class="btn btn-primary position-absolute btn-ig">Post</button>
+    </form>
+    
+    <script>
+        // Handle form submission
+        document.getElementById('comment-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+    
+            // Get the value of the input field
+            var commentInput = document.getElementById('comment-input').value;
+    
+            // Do something with the comment input, for example, send it to the server
+            console.log('Comment:', commentInput);
+    
+            // Optionally, you can clear the input field after submission
+            document.getElementById('comment-input').value = '';
+        });
+    </script>
+
+    <script>
+        // Dummy comments data
+        var commentsData = [
+            { username: 'user1', comment: 'Great photo!' },
+            { username: 'user2', comment: 'Awesome shot!' }
+        ];
+    
+        // Function to render comments
+        function renderComments() {
+            var commentsSection = document.getElementById('comments-section');
+    
+            // Clear existing comments
+            commentsSection.innerHTML = '';
+    
+            // Render new comments
+            commentsData.forEach(function(comment) {
+                var commentDiv = document.createElement('div');
+                var username = document.createElement('strong');
+                username.textContent = comment.username;
+                var commentText = document.createElement('span');
+                commentText.textContent = comment.comment;
+                commentDiv.appendChild(username);
+                commentDiv.appendChild(commentText);
+                commentsSection.appendChild(commentDiv);
+            });
+        }
+    
+        // Initial rendering
+        renderComments();
+    </script>
+
+    <script>
+        // JavaScript code for handling actions
+        document.addEventListener('DOMContentLoaded', function () {
+            // Like button action
+            document.querySelectorAll('.btn-like').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    // Toggle the like status UI
+                    btn.classList.toggle('text-danger');
+                    // Add your logic here to update the like status in the backend
+                });
+            });
+    
+            // Comment button action
+            document.querySelectorAll('.btn-comment').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    // Toggle the comment box visibility
+                    var commentBox = btn.closest('.card-body').querySelector('.comment-box');
+                    commentBox.classList.toggle('d-none');
+                });
+            });
+    
+            // Share button action
+            document.querySelectorAll('.btn-share').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    // Add your logic here for sharing the post
+                });
+            });
+        });
+    </script>
+    
+    
+    
 </body>
 
 </html>
