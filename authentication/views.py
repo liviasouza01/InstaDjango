@@ -3,6 +3,7 @@ from . import models
 from . import forms
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return redirect('login')
@@ -30,3 +31,8 @@ def signup_view(request):
     else:
         form = forms.SignUpForm()
     return render(request, 'auth/signup.html', {'form':form})
+
+@login_required
+def index(request):
+    return redirect('home')
+
