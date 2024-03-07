@@ -4,6 +4,8 @@
 
 {% block main-content %}
 
+
+
 <div class="mt-4">
     <div class="container d-flex justify-content-center">
         <div class="col-9">
@@ -45,14 +47,9 @@
                     <!-- START OF POSTS -->
                     <div class="d-flex flex-column mt-4 mb-4">
                         <!-- Form for uploading images -->
-                        <form method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="image">Upload Image:</label>
-                                <input type="file" class="form-control-file" id="image" name="image">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Post</button>
-                        </form>
+                        <a href="{% url 'post_view' %}" class="btn btn-primary">Postar</a>
+
+<!-- End of Form for uploading images -->
 
                         <div class="card">
                             <div class="card-header p-3">

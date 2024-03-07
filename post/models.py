@@ -69,6 +69,3 @@ class Stream(models.Model):
         return str(self.user)
 
 post_save.connect(Stream.add_post, sender=Post)
-
-# OneToOne, ManyToMany and ForeignKey Fields 
-# https://stackoverflow.com/questions/25386119/whats-the-difference-between-a-onetoone-manytomany-and-a-foreignkey-field-in-d

@@ -17,3 +17,4 @@ def post_view(request):
     post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')
     
     return render(request, 'post/post_view.html', {'post_items':post_items})
+                
