@@ -24,6 +24,8 @@ urlpatterns = [
     path('', include('home.urls')),
     path('post/', include('post.urls')),
     path('', include('authentication.urls')),
+    path('social/', include('social.urls')),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
