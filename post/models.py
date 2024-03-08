@@ -27,6 +27,12 @@ class Hashtag(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+    
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField(verbose_name='comment', null=False)
+    posted = models.DateTimeField(auto_now_add=True)
+    
 
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -35,7 +41,8 @@ class Post(models.Model):
     posted = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Hashtag, related_name='tags')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    likes = models.IntegerField()
+    likes = models.IntegerField(null=True, blank=True, default=0)
+    comments = models.ManyToManyField(Comment, related_name='comments')
 
     def get_absolute_url(self):
         return reverse('postdetails', args=[str(self.id)])
