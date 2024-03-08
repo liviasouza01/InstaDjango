@@ -46,8 +46,6 @@ INSTALLED_APPS = [
     'authentication',
     'post',
     'home',
-    'social',
-    'crispy_forms',
 ]
 
 SITE_ID = 1
