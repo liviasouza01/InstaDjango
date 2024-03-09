@@ -14,7 +14,7 @@ SECRET_KEY = '#t(h6j+00v_53-$xm=d%y-=bm%vq+_zt@@7@qks_6b+t=+yd0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['instadjango.onrender.com', '127.0.0.1']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
