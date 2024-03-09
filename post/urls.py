@@ -1,9 +1,10 @@
-from django.urls import path, include
-from . import views
-from django.contrib.auth import views as auth_views
+from django.urls import path
+from post import views
 
+app_name = 'post'
 urlpatterns = [
-    path('', views.post_view, name='post_view'),
-    path('postdetails/<id>/', views.get_single_post, name='postdetails'),
-    path('comment/<id>/', views.comment, name='comment'),
+    path('', views.feeds, name='home'),
+    path('create-new-post/', views.create_post, name='create_post'),
+    path('details/<uuid:id>', views.post_details, name='post_details'),
+    path('search/', views.search, name='search'),
 ]

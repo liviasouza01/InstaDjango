@@ -1,54 +1,83 @@
 from django.shortcuts import render, redirect
-from .models import Follow, Post, Hashtag, Stream, Comment
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib import messages
+from django.shortcuts import get_object_or_404
+from django.db.models import Q
+from post.models import Post
+from follow.models import Stream
+from reaction.models import Like, Comment
+from reaction.forms import CommentForm
+from post.forms import CreatePostForm
+
+# Create your views here.
 
 @login_required
-def post_view(request):
+def feeds(request):
     user = request.user
-    if (request.method == 'POST'):
-        # get picture and caption
-        picture = request.FILES['picture']
-        caption = request.POST['caption']
-        # create post
-        post = Post(user=user, picture=picture, caption=caption)
-        post.save()
-        # save hashtags dont split just get the next word after the hashtag
-        hashtags = caption.split('#')[1:]
-        for hashtag in hashtags:
-            if hashtag:
-                hashtag = Hashtag.objects.get_or_create(title=hashtag)
-                post.tags.add(hashtag[0])
-        post.save()
-        messages.success(request, 'Your post has been uploaded')
-        # redirect to new post
-        return redirect('postdetails', id=post.id)
     posts = Stream.objects.filter(user=user)
-
-    group_ids = []
+    post_list = []
 
     for post in posts:
-        group_ids.append(post.post.id)
+        post_list.append(post.post_id)
 
-    post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')
-    
-    return render(request, 'post/post_view.html', {'post_items':post_items})
+    all_posts = Post.objects.filter(id__in=post_list).all().order_by('-created_at')
 
+    context = {'title': 'Feeds', 'all_posts':all_posts}
+    return render(request, 'feed.html', context)
 
-def get_single_post(request, id):
-    post = Post.objects.get(id=id)
-    return render(request, 'post/single_post.html', {'post':post})
+@login_required
+def create_post(request):
+    user = request.user.id
 
-def comment(request, id):
-    user = request.user
-    post = Post.objects.get(id=id)
-    if (request.method == 'POST'):
-        comment_text = request.POST['comment']
-        comment = Comment(user=user, comment=comment_text)
-        comment.save()
-        post.comments.add(comment)
-        post.save()
-        messages.success(request, 'Your comment has been added')
-        return redirect('postdetails', id=id)
-    return render(request, 'post/single_post.html', {'post':post})
+    if request.method == 'POST':
+        form = CreatePostForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            photo = form.cleaned_data.get('photo')
+            caption = form.cleaned_data.get('caption')
+            location = form.cleaned_data.get('location')
+
+            p, created_at = Post.objects.get_or_create(photo=photo, caption=caption, user_id=user)
+            p.save()
+            return redirect('post:home')
+    else:
+        form = CreatePostForm()
+
+    context = {'title':'Create New Post', 'form':form, 'user':request.user}
+    return render(request, 'create-post.html', context)
+
+@login_required
+def post_details(request, id):
+    post = get_object_or_404(Post, id=id)
+    comments = Comment.objects.filter(post=post).order_by('commented_at')
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.user = request.user
+            comment.save()
+            return HttpResponseRedirect(reverse('post:post_details', args=[id]))
+    else:
+        form = CommentForm()
+
+    context = {'title':'Post Details', 'post':post, 'form':form, 'comments':comments}
+    return render(request, 'post-detail.html', context)
+
+@login_required
+def search(request):
+    try:
+        query = request.GET['query']
+    except:
+        query = None
+    if query:
+        users = User.objects.all()
+        users = users.filter(Q(username__icontains=query) | Q(first_name__icontains=query) | Q(last_name__icontains=query))
+        # __iexact for exact match
+    else:
+        users = User.objects.all()
+    context = {'title':'Search Results', 'users':users}
+    return render(request, 'search.html', context)

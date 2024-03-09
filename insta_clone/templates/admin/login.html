@@ -1,7 +1,0 @@
-{% extends "admin/login.html" %}
-
-{% block branding %}
-    <h1><a href="{% url 'admin:index' %}">Only staff</a></h1>
-{% endblock %}
-
-{% block bodyclass %}{{ block.super }} logo{% endblock %}

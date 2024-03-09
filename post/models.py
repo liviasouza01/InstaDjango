@@ -1,78 +1,29 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
 from django.utils.text import slugify
 from django.urls import reverse
-import uuid
 
-def user_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    # Files will be uploaded to users directory
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
+# Create your models here.
 
-class Hashtag(models.Model):
-    title = models.CharField(max_length=75, verbose_name='Hashtag')
-    slug = models.SlugField(null=False, unique=True)
+# Create a seperate directory for each user to upload his/her files
+def get_user_directory(instance, file):
+    return 'user-{0}/{1}'.format(instance.user.username, file)
 
-    class Meta:
-        verbose_name = 'hashtag'
-
-    def get_absolute_url(self):
-        return reverse("hashtags", arg=[self.slug])
-    
-    def __str__(self):
-        return str(self.title)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        return super().save(*args, **kwargs)
-    
-class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.TextField(verbose_name='comment', null=False)
-    posted = models.DateTimeField(auto_now_add=True)
-    
 
 class Post(models.Model):
+    # Creating our own id for the post
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    picture = models.ImageField(upload_to=user_directory_path, verbose_name='picture', null=False)
-    caption = models.TextField(verbose_name='caption', null=False)
-    posted = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Hashtag, related_name='tags')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    likes = models.IntegerField(null=True, blank=True, default=0)
-    comments = models.ManyToManyField(Comment, related_name='comments')
-
-    def get_absolute_url(self):
-        return reverse('postdetails', args=[str(self.id)])
-
-    def __str__(self):
-        return str(self.user)
-
-class Follow(models.Model):
-    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
-    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
-    
-    def __str__(self):
-        return str(self.follower)
-
-class Stream(models.Model):
-    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stream_following')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    date = models.DateTimeField()
-
-    def add_post(sender, instance, *args, **kwargs):
-        post = instance
-        user = post.user
-        followers = Follow.objects.all().filter(following=user)
-        for follower in followers:
-            stream = Stream(post=post, user=follower.follower, 
-             date=post.posted, following=user)
-            stream.save()
+    photo = models.ImageField(upload_to=get_user_directory, null=False, verbose_name='Picture')
+    caption = models.TextField(max_length=1000, verbose_name='Caption')
+    location = models.CharField(max_length=100, null=True, blank=True)
+    likes = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated_at = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.id)
 
-post_save.connect(Stream.add_post, sender=Post)
+    class Meta:
+        verbose_name_plural = 'Posts'

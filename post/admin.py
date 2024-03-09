@@ -1,18 +1,16 @@
 from django.contrib import admin
-from .models import Post, Follow, Stream, Hashtag
+from post.models import Post
 
-@admin.register(Post)
-class PostModelAdmin(admin.ModelAdmin):
-    list_display = ['user', 'id','posted', 'likes', 'picture']
+# Register your models here.
 
-@admin.register(Follow)
-class FollowModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'follower', 'following']
+class PostAdmin(admin.ModelAdmin):
+    date_hierarchy = 'created_at'
+    search_fields = ['user', 'created_at', 'updated_at']
+    list_display = ['user', 'id']
+    # list_editable = ['new_price', 'available']
+    list_filter = ['user', 'created_at', 'likes']
+    readonly_fields = ['id', 'user', 'photo', 'caption', 'location', 'likes', 'created_at', 'updated_at']
+    class Meta:
+        model = Post
 
-@admin.register(Stream)
-class StreamModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'following', 'post', 'date']
-
-@admin.register(Hashtag)
-class HashtagModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'slug']
+admin.site.register(Post, PostAdmin)
