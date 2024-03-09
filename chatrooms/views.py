@@ -7,4 +7,4 @@ class Index(View):
 
 class Room(View):
 	def get(self, request, room_name):
-		return render(request, 'chatrooms/room.html', {'room_name': room_name})
+		return render(request, 'room.html', {'room_name': room_name})

@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'reaction.apps.ReactionConfig',
     'notification.apps.NotificationConfig',
     'chatrooms',
-    'channels',
 
 ]
 

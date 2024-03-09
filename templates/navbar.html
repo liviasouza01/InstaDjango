@@ -13,9 +13,9 @@
         <a href="{% url 'post:create_post' %}" class="navigation__link">
             <i class="fa fa-plus-square"></i>
         </a>
-        <!-- <a href="explore.html" class="navigation__link">
+        <a href="{%url 'chatrooms:room' request.user%}" class="navigation__link">
             <i class="fa fa-compass"></i>
-        </a> -->
+        </a>
         <a href="{% url 'notification:notification' %}" class="navigation__link">
             <i class="fa fa-heart-o"></i>
             {% if notification_count %}
@@ -25,6 +25,7 @@
         <a href="{% url 'profile:profile' request.user %}" class="navigation__link">
             <i class="fa fa-user-o"></i>
         </a>
+        
     </div>
 </nav>
 
