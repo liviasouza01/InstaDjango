@@ -10,26 +10,21 @@ from user.forms import ChangePasswordForm
 # Create your views here.
 
 def login(request):
-    """
-    View for user login.
-    """
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
 
-        # Attempting to authenticate user
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
             messages.success(request, 'You have been logged in to your account!')
-            return redirect('post:home')  # Redirecting user to home page on successful login
+            return redirect('post:home')
         else:
             messages.error(request, 'Oops! Username and Password do not match!')
-            return redirect('user:login')  # Redirecting user back to login page on failed login
+            return redirect('user:login')
     else:
         context = {'title': 'Login'}
-        return render(request, 'login.html', context)  # Rendering login page with title 'Login'
-
+        return render(request, 'login.html', context)
 
 @login_required
 def logout(request):
