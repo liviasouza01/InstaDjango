@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'notification.apps.NotificationConfig',
     'chatrooms',
     'channels',
+    'rest_framework',
+    'drf_yasg',
 
 ]
 
@@ -82,6 +84,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'insta_clone.wsgi.application'
 ASGI_APPLICATION = "insta_clone.asgi.application"
