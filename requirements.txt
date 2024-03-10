@@ -24,8 +24,6 @@ daphne==4.1.0
 dill==0.3.8
 distlib==0.3.8
 Django==5.0.3
-django-admin-interface==0.28.6
-django-colorfield==0.11.0
 django-countries==5.3.3
 django-crispy-forms==2.1
 django-instagram==0.3.2
