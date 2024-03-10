@@ -1,0 +1,11 @@
+{
+    "routes": [
+      {
+        "src": "/static/js/(.*)",
+        "headers": {
+          "Content-Type": "application/javascript"
+        }
+      }
+    ]
+  }
+  
