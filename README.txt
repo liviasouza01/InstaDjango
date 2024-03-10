@@ -11,6 +11,8 @@ Installation
 3. Install dependencies: `pip install -r requirements.txt`
 4. Configure settings: `cp .env.example .env`
 
+Obs.: insta_clone path has the settings.py
+
 Usage
 -----
 
