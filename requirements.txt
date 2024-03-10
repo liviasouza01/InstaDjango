@@ -90,4 +90,5 @@ urllib3==1.26.6
 virtualenv==20.25.0
 websocket-client==1.7.0
 wheel==0.42.0
+whitenoise==6.6.0
 zope.interface==6.2
