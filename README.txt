@@ -6,8 +6,8 @@ This is a project proposed by Loomi to check Django backend knowledge
 Installation
 ------------
 
-1. Clone the repository: `git clone https://github.com/username/repository.git`
-2. Navigate to the project directory: `cd project`
+1. Clone the repository: `git clone https://github.com/liviasouza01/InstaDjango.git`
+2. Navigate to the project directory
 3. Install dependencies: `pip install -r requirements.txt`
 4. Configure settings: `cp .env.example .env`
 
