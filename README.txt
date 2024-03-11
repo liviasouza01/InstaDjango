@@ -8,16 +8,19 @@ Installation
 
 1. Clone the repository: `git clone https://github.com/liviasouza01/InstaDjango.git`
 2. Navigate to the project directory
-3. Install dependencies: `pip install -r requirements.txt`
-4. Configure settings: `cp .env.example .env`
+3. Activate virtual environment: `source venv/bin/activate`
+4. Install dependencies: `pip3 install -r requirements.txt`
+5. Migrate the project: `python3 manage.py migrate`
 
 Obs.: insta_clone path has the settings.py
 
 Usage
 -----
 
-1. Run the server: `python manage.py runserver`
+1. Run the server: `python3 manage.py runserver`
 2. Open your browser and navigate to `http://localhost:8000`
+
+Make adjustments if you're using Windows.
 
 Features
 --------
