@@ -67,6 +67,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'insta_clone.urls'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
