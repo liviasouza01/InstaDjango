@@ -13,9 +13,6 @@
         <a href="{% url 'post:create_post' %}" class="navigation__link">
             <i class="fa fa-plus-square"></i>
         </a>
-        <a href="{% url 'social:create_post' request.user %}" class="navigation__link">
-            <i class="fa fa-envelope"></i>
-        </a>
         <a href="{% url 'notification:notification' %}" class="navigation__link">
             <i class="fa fa-heart-o"></i>
             {% if notification_count %}
