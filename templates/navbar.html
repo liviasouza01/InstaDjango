@@ -13,7 +13,7 @@
         <a href="{% url 'post:create_post' %}" class="navigation__link">
             <i class="fa fa-plus-square"></i>
         </a>
-        <a href="{% url 'chatrooms:room' request.user %}" class="navigation__link">
+        <a href="{% url 'social:create-thread' request.user %}" class="navigation__link">
             <i class="fa fa-envelope"></i>
         </a>
         <a href="{% url 'notification:notification' %}" class="navigation__link">
