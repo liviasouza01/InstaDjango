@@ -161,4 +161,3 @@ MEDIA_URL = '/media/'
 
 LOGIN_URL = '/user/login/'
 
-
