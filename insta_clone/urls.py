@@ -9,6 +9,7 @@ from django.urls import reverse
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 @api_view(['GET'])
 def install_guide(request):
@@ -59,6 +60,8 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('install-guide/', install_guide, name='install-guide'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+urlpatterns += staticfiles_urlpatterns()
 
 admin.site.site_header = "Instagram Administration"
 admin.site.site_title = "Admin"
