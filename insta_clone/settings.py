@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'follow.apps.FollowConfig',
     'reaction.apps.ReactionConfig',
     'notification.apps.NotificationConfig',
-    'chatrooms',
     'channels',
     'rest_framework',
     'drf_yasg',
