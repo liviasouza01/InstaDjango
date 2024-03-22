@@ -8,9 +8,6 @@
 <main class="edit-profile">
     <section class="profile-form">
         <header class="profile-form__header">
-            <div class="profile-form__avatar-container">
-                <img src="{% static './images/avatar.jpg' %}" class="profile-form__avatar" />
-            </div>
             <h4 class="profile-form__title">{{ user.username }}</h4>
         </header>
         <form method="POST" enctype="multipart/form-data" class="edit-profile__form">

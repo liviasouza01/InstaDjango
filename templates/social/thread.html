@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Message</title>
+</head>
+<body>
+    <h1>Messages with {{ thread.receiver }}</h1>
+    <ul>
+        {% for message in message_list %}
+        <li>{{ message.sender_user }}: {{ message.body }}</li>
+        {% endfor %}
+    </ul>
+    <form action="{% url 'create-message' pk=thread.pk %}"  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>

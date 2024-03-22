@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'social',
+    'chatrooms',
 
 ]
 
@@ -99,8 +100,7 @@ CHANNEL_LAYERS = {
 
 #Postgresql on Render:
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL')) 
-    }
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL')) }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
