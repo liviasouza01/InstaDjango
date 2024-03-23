@@ -1,6 +1,13 @@
 from django.urls import path
 from post import views
 
+#REST FRAMEWORK
+from rest_framework.routers import SimpleRouter
+
+router = SimpleRouter()
+router.register('create_post', views.PostViewSet)
+#=====================
+
 app_name = 'post'
 urlpatterns = [
     path('', views.feeds, name='home'),

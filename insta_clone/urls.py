@@ -60,7 +60,10 @@ urlpatterns = [
     path('install-guide/', install_guide, name='install-guide'),
     path('social/', include('social.urls')),
     path('chat/', include('chatrooms.urls')),
-
+#REST FRAMEWORK
+    path('api_auth/', include('rest_framework.urls')),
+    path("api/v1/", include('post.urls')), #aqui tb vai pra post (erro?)
+#======================
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()

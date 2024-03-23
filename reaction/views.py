@@ -5,6 +5,15 @@ from django.urls import reverse
 from reaction.models import Like
 from post.models import Post
 
+#REST FRAMEWORK
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import permissions
+
+from post.serializers import *
+from .models import *
+#===================
 # Create your views here.
 
 @login_required
@@ -29,3 +38,12 @@ def likes(request, id):
     post.save()
 
     return HttpResponseRedirect(reverse('post:post_details', args=[id]))
+
+#REST FRAMEWORK
+class LikeViewSet(viewsets.ModelViewSet):
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializers
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializers

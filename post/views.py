@@ -11,6 +11,16 @@ from reaction.models import Like, Comment
 from reaction.forms import CommentForm
 from post.forms import CreatePostForm
 
+#REST FRAMEWORK
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import permissions
+
+from .serializers import *
+from .models import *
+#===================
+
 # Create your views here.
 
 @login_required
@@ -96,3 +106,8 @@ def search(request):
         users = User.objects.all()
     context = {'title': 'Search Results', 'users': users}
     return render(request, 'search.html', context)
+
+#REST FRAMEWORK
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializers

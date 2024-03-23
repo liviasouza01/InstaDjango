@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'reaction.apps.ReactionConfig',
     'notification.apps.NotificationConfig',
     'channels',
-    'rest_framework',
+    'rest_framework', #REST FRAMEWORK
+    'django_filters', #REST FRAMEWORK
     'drf_yasg',
     'social',
     'chatrooms',
@@ -142,3 +143,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/user/login/'
+
+#REST FRAMEWORK
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        #'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100
+}
