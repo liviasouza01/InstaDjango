@@ -51,10 +51,7 @@ INSTALLED_APPS = [
     'channels',
     'rest_framework', #REST FRAMEWORK
     'django_filters', #REST FRAMEWORK
-    'drf_yasg',
-    'social',
     'chatrooms',
-
 ]
 
 MIDDLEWARE = [
