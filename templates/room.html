@@ -1,102 +1,104 @@
-{% extends 'base.html' %}
-{% load static %}
+<!DOCTYPE html>
 
-{% block content %}
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Chatty</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    </head>
 
-{% include 'navbar.html' %}
-
-
-<html lang="en">
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-    <title>Instachat</title>
-</head>
-
-<body>
-
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-6">
-                <form>
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1" class="h4 pt-5">Chat here!</label>
-                        <textarea class="form-control" id="chat-text" rows="10"></textarea><br>
+    <body>
+        <section class="section">
+            <div class="container">
+                <div class="columns is-multiline">
+                    <div class="column is-6 is-offset-3 mb-6">
+                        <section class="hero is-primary">
+                            <div class="hero-body">
+                                <p class="title">
+                                    Chatty
+                                </p>
+                                <p class="subtitle">
+                                    A simple chat built with Django, Channels and Redis
+                                </p>
+                            </div>
+                        </section>
                     </div>
-                    <div class="form-group">
-                        <input class="form-control" id="input" type="text"></br>
+
+                    <div class="column is-6 is-offset-3">
+                        <div class="box">
+                            <div id="chat-messages" style="max-height: 300px; overflow-y: scroll;">{% for m in messages %}<b>{{ m.username }}</b>: {{ m.content }}<br>{% endfor %}</div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Message" id="chat-message-input">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <a class="button is-info" id="chat-message-submit">Submit</a>
+                            </div>
+                        </div>
+
+                        <small class="has-text-grey-light">Your username: {{ username }}</small>
                     </div>
-                    <button class="btn btn-primary btn-lg btn-block" id="submit" type="button">Post</button>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    {{ request.user.username|json_script:"user_username" }}
-    {{ room_name|json_script:"room-name" }}
-    <script>
-        const user_username = JSON.parse(document.getElementById('user_username').textContent);
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
-        
-        // Função para enviar a mensagem
-        function sendMessage() {
-            const messageInput = document.querySelector('#input');
-            const message = messageInput.value.trim();
-            
-            if (message !== '') {
+       {{ room_name|json_script:"json-roomname" }}
+       {{ username|json_script:"json-username" }}
+
+        <script>
+            function scrollToBottom() {
+                let objDiv = document.getElementById("chat-messages");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            }
+
+            scrollToBottom();
+
+            const roomName = JSON.parse(document.getElementById('json-roomname').textContent);
+            const userName = JSON.parse(document.getElementById('json-username').textContent);
+
+            const chatSocket = new WebSocket(
+                'ws://'
+                + window.location.host
+                + '/ws/'
+                + roomName
+                + '/'
+            );
+
+            chatSocket.onmessage = function(e) {
+                console.log('onmessage');
+
+                const data = JSON.parse(e.data);
+
+                if (data.message) {
+                    document.querySelector('#chat-messages').innerHTML += ('<b>' + data.username + '</b>: ' + data.message + '<br>');
+                } else {
+                    alert('The message is empty!');
+                }
+
+                scrollToBottom();
+            };
+
+            chatSocket.onclose = function(e) {
+                console.log('The socket close unexpectadly');
+            };
+
+            document.querySelector('#chat-message-submit').onclick = function(e) {
+                const messageInputDom = document.querySelector('#chat-message-input');
+                const message = messageInputDom.value;
+
                 chatSocket.send(JSON.stringify({
                     'message': message,
-                    'username': user_username,
+                    'username': userName,
+                    'room': roomName
                 }));
-                messageInput.value = '';
-            }
-        }
 
-        // Evento ao pressionar Enter no campo de entrada
-        document.querySelector('#input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                e.preventDefault(); // Evitar a ação padrão de adicionar nova linha
-                sendMessage(); // Chamar a função de envio de mensagem
-            }
-        });
-
-        // Evento ao clicar no botão de envio
-        document.querySelector('#submit').addEventListener('click', function (e) {
-            sendMessage(); // Chamar a função de envio de mensagem
-        });
-
-        // WebSocket
-        const chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
-        );
-
-        chatSocket.onmessage = function (e) {
-            const data = JSON.parse(e.data);
-            document.querySelector('#chat-text').value += (data.username + ': ' + data.message + '\n');
-        };
-    </script>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
-    </script>
-</body>
-
+                messageInputDom.value = '';
+            };
+        </script>
+    </body>
 </html>
-
-{% endblock %}
-
