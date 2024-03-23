@@ -93,11 +93,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'insta_clone.wsgi.application'
 ASGI_APPLICATION = "insta_clone.asgi.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],
+        }
+    }
+}
+'''
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
     },
 }
+'''
 
 #Postgresql on Render:
 DATABASES = {
