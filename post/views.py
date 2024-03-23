@@ -69,30 +69,28 @@ def create_post(request):
             caption = form.cleaned_data.get('caption')
             location = form.cleaned_data.get('location')
 
-            # Redimensionar a imagem
+            # Resize
             img = Image.open(photo)
-            rotate = img.rotate(-90, expand=True)
-            # Defina a largura e altura desejadas
+            rotate = img.rotate(-90, expand=True) #don't know why, but I needed it
             width = 300
             height = 400
             img_resized = rotate.resize((width, height))
             
 
-            # Salvar a imagem redimensionada em memória
+            # Save img resized
             img_io = io.BytesIO()
             img_resized.save(img_io, format='JPEG')
 
-            # Salvar o objeto Post com a imagem redimensionada
             post = Post(user_id=user, caption=caption, location=location)
             post.photo.save(photo.name, img_io)
 
-            # Redirecionar para a página inicial
+            # Redirect
             return redirect('post:home')
     else:
-        # Se o método da requisição não for POST, exibir um formulário vazio
+        # If method is not POST
         form = CreatePostForm()
 
-    # Preparar os dados de contexto para serem passados para o template
+    # Prepare data to template
     context = {'title': 'Create New Post', 'form': form, 'user': request.user}
     return render(request, 'create-post.html', context)
 
