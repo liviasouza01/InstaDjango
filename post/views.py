@@ -11,6 +11,12 @@ from reaction.models import Like, Comment
 from reaction.forms import CommentForm
 from post.forms import CreatePostForm
 
+from PIL import Image
+import tempfile
+import os
+import io
+
+
 #REST FRAMEWORK
 from rest_framework import viewsets
 from rest_framework.decorators import action
@@ -55,16 +61,30 @@ def create_post(request):
             caption = form.cleaned_data.get('caption')
             location = form.cleaned_data.get('location')
 
-            # Create a new post object associated with the current user
-            p, created_at = Post.objects.get_or_create(photo=photo, caption=caption, user_id=user)
-            p.save()
-            # Redirect to the home page
+            # Redimensionar a imagem
+            img = Image.open(photo)
+            rotate = img.rotate(-90, expand=True)
+            # Defina a largura e altura desejadas
+            width = 300
+            height = 400
+            img_resized = rotate.resize((width, height))
+            
+
+            # Salvar a imagem redimensionada em memória
+            img_io = io.BytesIO()
+            img_resized.save(img_io, format='JPEG')
+
+            # Salvar o objeto Post com a imagem redimensionada
+            post = Post(user_id=user, caption=caption, location=location)
+            post.photo.save(photo.name, img_io)
+
+            # Redirecionar para a página inicial
             return redirect('post:home')
     else:
-        # If the request method is not POST, display an empty form
+        # Se o método da requisição não for POST, exibir um formulário vazio
         form = CreatePostForm()
 
-    # Prepare context data to be passed to the template
+    # Preparar os dados de contexto para serem passados para o template
     context = {'title': 'Create New Post', 'form': form, 'user': request.user}
     return render(request, 'create-post.html', context)
 
