@@ -29,8 +29,10 @@ django-admin-interface==0.28.6
 django-colorfield==0.11.0
 django-countries==5.3.3
 django-crispy-forms==2.1
+django-filter==1.1.0
 django-instagram==0.3.2
 djangorestframework==3.14.0
+djangorestframework-filters==0.11.1
 docutils==0.16
 drf-yasg==1.21.7
 filelock==3.13.1
