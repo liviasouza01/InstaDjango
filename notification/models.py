@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 NOTIFICATION_CHOICES = (
     ('Like', 'Like'),
     ('Comment', 'Comment'),
-    ('Follow', 'Follow')
+    ('Follow', 'Follow'),
+    ('Message', 'Message')
 )
 
 class Notification(models.Model):
