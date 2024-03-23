@@ -11,6 +11,7 @@ from reaction.models import Like, Comment
 from reaction.forms import CommentForm
 from post.forms import CreatePostForm
 
+#CROPPING
 from PIL import Image
 import tempfile
 import os
@@ -22,6 +23,13 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import permissions
+
+#API
+from .serializers import *
+from .models import *
+from .permissions import *
+from reaction.models import Comment
+
 
 from .serializers import *
 from .models import *

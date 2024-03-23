@@ -6,7 +6,7 @@ from django.urls import reverse
 
 # Create your models here.
 
-# Create a seperate directory for each user to upload his/her files
+# Create a seperate directory for each user to upload files
 def get_user_directory(instance, file):
     return 'user-{0}/{1}'.format(instance.user.username, file)
 

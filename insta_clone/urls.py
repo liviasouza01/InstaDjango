@@ -11,6 +11,9 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+from post.urls import router
+
+
 @api_view(['GET'])
 def install_guide(request):
     """
@@ -61,7 +64,7 @@ urlpatterns = [
     path('chat/', include('chatrooms.urls')),
 #REST FRAMEWORK
     path('api_auth/', include('rest_framework.urls')),
-    path("api/v1/", include('post.urls')), #aqui tb vai pra post (erro?)
+    path("api/v1/", include(router.urls)),
 #======================
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
