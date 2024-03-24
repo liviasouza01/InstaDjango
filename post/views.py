@@ -29,10 +29,8 @@ from .serializers import *
 from .models import *
 from .permissions import *
 from reaction.models import Comment
-
-
-from .serializers import *
-from .models import *
+from user_profile.models import Profile
+from chatrooms.models import Message
 #===================
 
 # Create your views here.
@@ -137,3 +135,19 @@ def search(request):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializers
+
+class LikeViewSet(viewsets.ModelViewSet):
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializers
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializers
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializers
+
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializers

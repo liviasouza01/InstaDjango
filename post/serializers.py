@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from post.models import Post
 from reaction.models import Like, Comment
+from user_profile.models import Profile
+from chatrooms.models import Message
 
 #REST FRAMEWORK
 
@@ -30,4 +32,22 @@ class CommentSerializers(serializers.ModelSerializer):
             'user',
             'post',
             'body',
+        )
+
+class ProfileSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = (
+            'user',
+            'first_name',
+            'last_name',
+            'gender',
+        )
+
+class MessageSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = (
+            'username',
+            'content',
         )

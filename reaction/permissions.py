@@ -18,13 +18,5 @@ class PermissionsLike(permissions.BasePermission):
             if request.user.is_authenticated:
                 return True
             return False
-        
-        if request.method == 'PUT':
-            # Only auth users can edit
-            like = get_object_or_404(Like, pk=like_id)
-
-            if request.user.is_authenticated and like.user.id == request.user.id:
-                return True
-            return False
 
         return True
