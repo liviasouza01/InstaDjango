@@ -22,11 +22,6 @@ class PermissionsPost(permissions.BasePermission):
         if request.method == 'PUT':
             # Only auth users can edit
             post = get_object_or_404(Post, pk=post_id)
-
-            print(request.user.is_authenticated)
-            print(post.user.id)
-            print(request.user.id)
-
             if request.user.is_authenticated and post.user.id == request.user.id:
                 return True
             return False

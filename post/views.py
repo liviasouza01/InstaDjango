@@ -20,17 +20,8 @@ import io
 
 #REST FRAMEWORK
 from rest_framework import viewsets
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework import permissions
-
 #API
-from .serializers import *
-from .models import *
-from .permissions import *
-from reaction.models import Comment
-from user_profile.models import Profile
-from chatrooms.models import Message
+from insta_clone.serializers import *
 #===================
 
 # Create your views here.
@@ -136,18 +127,3 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializers
 
-class LikeViewSet(viewsets.ModelViewSet):
-    queryset = Like.objects.all()
-    serializer_class = LikeSerializers
-
-class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializers
-
-class ProfileViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializers
-
-class MessageViewSet(viewsets.ModelViewSet):
-    queryset = Message.objects.all()
-    serializer_class = MessageSerializers

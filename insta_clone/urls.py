@@ -11,7 +11,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from post.urls import router #Serializers and router concentred on post path
+from .routers import router #Serializers and router concentred on post path
 
 
 @api_view(['GET'])

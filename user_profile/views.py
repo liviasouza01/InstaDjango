@@ -9,6 +9,10 @@ from follow.models import Follow
 from user_profile.models import Profile
 from user_profile.forms import EditProfileForm
 
+from insta_clone.serializers import ProfileSerializers
+from rest_framework import viewsets
+
+
 # Create your views here.
 
 @login_required
@@ -63,3 +67,8 @@ def edit_profile(request):
 
     context = {'title': 'Edit Profile', 'form': form}
     return render(request, 'edit-profile.html', context)
+
+#REST
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializers
