@@ -12,7 +12,7 @@ from reaction.forms import CommentForm
 from post.forms import CreatePostForm
 
 #CROPPING
-from PIL import Image
+from PIL import Image, ExifTags
 import tempfile
 import os
 import io
@@ -60,15 +60,32 @@ def create_post(request):
 
             # Resize
             img = Image.open(photo)
-            rotate = img.rotate(-90, expand=True) #don't know why, but I needed it
-            width = 300
-            height = 400
-            img_resized = rotate.resize((width, height))
-            
+            try:
+                for orientation in ExifTags.TAGS.keys():
+                    if ExifTags.TAGS[orientation] == 'Orientation':
+                        break
+                exif = dict(img._getexif().items())
 
+                if exif[orientation] == 3:
+                    img = img.rotate(180, expand=True)
+                elif exif[orientation] == 6:
+                    img = img.rotate(270, expand=True)
+                elif exif[orientation] == 8:
+                    img = img.rotate(90, expand=True)
+            except (AttributeError, KeyError, IndexError):
+                # Caso não haja informações de orientação, continue normalmente
+                pass
+            #rotate = img.rotate(-360, expand=True) #don't know why, but I needed it
+            width = 300
+            height = 300
+            img.thumbnail((width, height))
             # Save img resized
             img_io = io.BytesIO()
-            img_resized.save(img_io, format='JPEG')
+            if photo.name.endswith('.png'):
+                img.save(img_io, format='PNG')
+            else:
+                img.save(img_io, format='JPEG')
+            #img.save(img_io, format='JPEG')
 
             post = Post(user_id=user, caption=caption, location=location)
             post.photo.save(photo.name, img_io)

@@ -41,7 +41,7 @@ def likes(request, id):
 
 #REST FRAMEWORK
 class LikeViewSet(viewsets.ModelViewSet):
-    queryset = Like.objects.all()
+    queryset = Post.objects.all()
     serializer_class = LikeSerializers
 
 class CommentViewSet(viewsets.ModelViewSet):

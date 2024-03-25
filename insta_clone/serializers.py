@@ -12,6 +12,7 @@ class PostSerializers(serializers.ModelSerializer):
         fields = (
             'id',
             'user',
+            'likes',
             'photo',
             'caption',
             'location',
@@ -19,10 +20,11 @@ class PostSerializers(serializers.ModelSerializer):
 
 class LikeSerializers(serializers.ModelSerializer):
     class Meta:
-        model = Like
+        model = Post
         fields = (
-            'user',
             'id',
+            'user',
+            'likes',
         )
 
 class CommentSerializers(serializers.ModelSerializer):
