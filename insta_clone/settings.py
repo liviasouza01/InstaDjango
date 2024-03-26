@@ -106,14 +106,14 @@ CHANNEL_LAYERS = {
     }
 }
 
-'''
+
 #Postgresql on Render:
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL')) }
 '''
 DATABASES = {
     'default': dj_database_url.parse(env('DATABASE_URL')) }
-
+'''
 
 AUTH_PASSWORD_VALIDATORS = [
     {
