@@ -19,6 +19,7 @@ Usage
 
 1. Run the server: `python3 manage.py runserver`
 2. Open your browser and navigate to `http://localhost:8000`
+3. Try http://localhost:8000/admin (user: livia ; password: livia)
 
 Make adjustments if you're using Windows.
 
