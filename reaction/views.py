@@ -43,7 +43,3 @@ def likes(request, id):
 class LikeViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = LikeSerializers
-
-class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializers
