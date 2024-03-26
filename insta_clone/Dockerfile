@@ -2,7 +2,7 @@ FROM python:3.12.1-stretch
 
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /app
+WORKDIR /Users/livia/Downloads/InstaDjango/
 
 COPY requirements.txt .
 
