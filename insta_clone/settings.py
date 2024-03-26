@@ -16,7 +16,12 @@ import dj_database_url
 from dotenv import load_dotenv
 
 load_dotenv()
-# from decouple import config
+
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -100,17 +105,15 @@ CHANNEL_LAYERS = {
         }
     }
 }
-'''
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer',
-    },
-}
-'''
 
+'''
 #Postgresql on Render:
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL')) }
+'''
+DATABASES = {
+    'default': dj_database_url.parse(env('DATABASE_URL')) }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
