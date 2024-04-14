@@ -62,7 +62,7 @@ optional-django==0.3.0
 packaging==23.2
 pathspec==0.12.1
 pep8==1.7.1
-pillow==10.2.0
+pillow==10.3.0
 platformdirs==4.2.0
 psycopg2==2.9.9
 psycopg2-binary==2.9.9
