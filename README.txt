@@ -11,7 +11,7 @@ Installation
 3. Activate virtual environment: `source venv/bin/activate`
 4. Install dependencies: `pip3 install -r requirements.txt`
 5. Migrate the project: `python3 manage.py migrate`
-6. $ export DATABASE_URL=postgres://postgredb_pjc2_user:H2rHfzHUM8QpAnYXNCLcE5XM4T0OTI5C@dpg-cntotgun7f5s7382khe0-a.oregon-postgres.render.com/postgredb_pjc2
+6. $ export DATABASE_URL= (your's here)
 
 Obs.: insta_clone path has the settings.py
 
